@@ -4,12 +4,12 @@ import java.util.Scanner;
 
 public class WarehouseManagement {
 
-    static String[] names;
-    static int[] codes;
-    static int[] quantities;
-    static double prices;
-    static boolean status;
-
+    static String[] names = new String[100];
+    static int[] codes = new int[100];
+    static int[] quantities = new int[100];
+    static double[] prices = new double[100];
+    static boolean[] isActive = new boolean[100];
+    static int productsRegistered = 0;
 
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
@@ -59,15 +59,24 @@ public class WarehouseManagement {
         return true;
     }
 
-
-
-
-
     public static void addProduct(Scanner scanner) {
+        System.out.printf("%n%nCADASTRO DE PRODUTO");
+        System.out.printf("%nDigite o nome do produto: ");
+        names[productsRegistered] = scanner.next();
+        System.out.printf("%nDigite a quantidade em estoque: ");
+        quantities[productsRegistered] = scanner.nextInt();
+        System.out.printf("%nDigite o preço unitário: ");
+        prices[productsRegistered] = scanner.nextDouble();
+        codes[productsRegistered] = productsRegistered;
+        isActive[productsRegistered] = true;
 
+        System.out.printf("%n-> O produto %s, com estoque %d e preço %.2f foi cadastrado com o código %d%n", names[productsRegistered], quantities[productsRegistered], prices[productsRegistered], codes[productsRegistered]);
+        productsRegistered++;
     }
 
     public static void updateQuantity(Scanner scanner) {
+
+
 
     }
 
