@@ -1,5 +1,6 @@
 package com.amates.structuredwms;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class WarehouseManagement {
@@ -10,6 +11,8 @@ public class WarehouseManagement {
     static double[] prices = new double[100];
     static boolean[] isActive = new boolean[100];
     static int productsRegistered = 0;
+
+    static ArrayList<String> changesLog = new ArrayList<>();
 
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
@@ -61,14 +64,19 @@ public class WarehouseManagement {
 
     public static void addProduct(Scanner scanner) {
         System.out.printf("%n%nCADASTRO DE PRODUTO");
+
         System.out.printf("%nDigite o nome do produto: ");
         names[productsRegistered] = scanner.next();
+
         System.out.printf("%nDigite a quantidade em estoque: ");
         quantities[productsRegistered] = scanner.nextInt();
+
         System.out.printf("%nDigite o preço unitário: ");
         prices[productsRegistered] = scanner.nextDouble();
+
         codes[productsRegistered] = productsRegistered;
         isActive[productsRegistered] = true;
+        addToLog("Cadastrar produto", productsRegistered);
 
         System.out.printf("%n-> O produto %s, com estoque %d e preço %.2f foi cadastrado com o código %d%n", names[productsRegistered], quantities[productsRegistered], prices[productsRegistered], codes[productsRegistered]);
         productsRegistered++;
@@ -92,6 +100,14 @@ public class WarehouseManagement {
     public static void getWarehouseValuation(Scanner scanner) {
 
     }
+
+    public static void addToLog(String action, double value){
+        changesLog.add("Ação: " + action + "| Parâmetro: " + value);
+    }
+
+
+
+
 
 
 }
