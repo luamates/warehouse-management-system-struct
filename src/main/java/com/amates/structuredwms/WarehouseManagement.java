@@ -13,15 +13,18 @@ public class WarehouseManagement {
 
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
+        boolean continueSystem = true;
+
+        while (continueSystem) {
+            continueSystem = mainMenu(scanner);
 
 
-        mainMenu(scanner);
+        }
 
 
     }
 
-    public static void mainMenu(Scanner scanner) {
-
+    public static boolean mainMenu(Scanner scanner) {
         System.out.printf("%n%n===== CONTROLE DE ESTOQUE =====%n");
         System.out.printf("1 - Cadastrar produto%n");
         System.out.printf("2 - Atualizar quantidade%n");
@@ -30,14 +33,30 @@ public class WarehouseManagement {
         System.out.printf("5 - Ver valor total do estoque%n");
         System.out.printf("6 - Sair%n");
         System.out.println("Escolha uma opção: ");
+
         int userInput = scanner.nextInt();
-
         switch (userInput) {
-
-
-
+            case 1:
+                addProduct(scanner);
+                break;
+            case 2:
+                updateQuantity(scanner);
+                break;
+            case 3:
+                removeProduct(scanner);
+                break;
+            case 4:
+                getQuantity(scanner);
+                break;
+            case 5:
+                getWarehouseValuation(scanner);
+                break;
+            case 6:
+                return false;
+            default:
+                System.out.printf("%n%nOPÇÃO INVÁLIDA.%n%n");
         }
-
+        return true;
     }
 
 
