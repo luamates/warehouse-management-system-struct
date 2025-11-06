@@ -15,13 +15,14 @@ public class WarehouseManagement {
 
     static ArrayList<String> changesLog = new ArrayList<>();
 
-    static void main() {
+    public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         boolean continueSystem = true;
 
         while (continueSystem) {
             continueSystem = mainMenu(scanner);
         }
+        scanner.close();
     }
 
     public static boolean mainMenu(Scanner scanner) {
@@ -50,6 +51,7 @@ public class WarehouseManagement {
                 break;
             case 4:
                 activateProduct(scanner);
+                break;
             case 5:
                 getQuantity(scanner);
                 break;
@@ -91,6 +93,12 @@ public class WarehouseManagement {
         System.out.printf("%n%nATUALIZAR QUANTIDADE %nDigite o código do produto que deseja atualizar a quantidade em estoque: ");
         int codeToUpdateQtt = scanner.nextInt();
 
+        if (codeToUpdateQtt < 0 || codeToUpdateQtt >= productsRegistered) {
+            System.out.printf("%nCódigo inválido!%n");
+            addToLog("Atualizar estoque [erro]", codeToUpdateQtt);
+            return;
+        }
+
         if (isActive[codeToUpdateQtt]) {
             System.out.printf("%nAtualmente, o produto %s tem %d unidades em estoque. %nQual deve ser a nova quantidade? ", names[codeToUpdateQtt], quantities[codeToUpdateQtt]);
             quantities[codeToUpdateQtt] = scanner.nextInt();
@@ -107,6 +115,12 @@ public class WarehouseManagement {
         System.out.printf("%n%nREMOVER PRODUTO %nDigite o código do produto que deseja mudar o status para inativo: ");
         int codeToDeactivate = scanner.nextInt();
 
+        if (codeToDeactivate < 0 || codeToDeactivate >= productsRegistered) {
+            System.out.printf("%nCódigo inválido!%n");
+            addToLog("Desativar produto [erro]", codeToDeactivate);
+            return;
+        }
+
         if (quantities[codeToDeactivate] > 0) {
             System.out.printf("%nO produto %s tem quantidade em estoque. Zere antes de remover!", names[codeToDeactivate]);
             addToLog("Desativar produto [erro]", codeToDeactivate);
@@ -120,6 +134,12 @@ public class WarehouseManagement {
     public static void activateProduct(Scanner scanner) {
         System.out.printf("%n%nREATIVAR PRODUTO %nDigite o código do produto que deseja mudar o status para reativar: ");
         int codeToActivate = scanner.nextInt();
+
+        if (codeToActivate < 0 || codeToActivate >= productsRegistered) {
+            System.out.printf("%nCódigo inválido!%n");
+            addToLog("Ativar produto [erro]", codeToActivate);
+            return;
+        }
 
         if (isActive[codeToActivate]) {
             System.out.printf("%nO produto %s já está ativo!", names[codeToActivate]);
@@ -141,6 +161,13 @@ public class WarehouseManagement {
     public static void getQuantity(Scanner scanner) {
         System.out.printf("%n%nACESSAR QUANTIDADE EM ESTOQUE %nDigite o código do produto que deseja consultar a quantidade: ");
         int codeToGetQtt = scanner.nextInt();
+
+        if (codeToGetQtt < 0 || codeToGetQtt >= productsRegistered) {
+            System.out.printf("%nCódigo inválido!%n");
+            addToLog("Ver quantidade [erro]", codeToGetQtt);
+            return;
+        }
+
         if (isActive[codeToGetQtt]) {
             System.out.printf("%nO produto %s tem quantidade %d.", names[codeToGetQtt], quantities[codeToGetQtt]);
             addToLog("Ver quantidade", codeToGetQtt);
