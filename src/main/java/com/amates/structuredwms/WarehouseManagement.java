@@ -91,9 +91,13 @@ public class WarehouseManagement {
     }
 
     public static void updateQuantity(Scanner scanner) {
-        System.out.printf("%n%nATUALIZAR QUANTIDADE");
+        System.out.printf("%n%nATUALIZAR QUANTIDADE %nDigite o código do produto que deseja atualizar a quantidade em estoque: ");
+        int codeToUpdateQtt = scanner.nextInt();
 
+        System.out.printf("%nAtualmente, o produto %s tem %d unidades em estoque. %nQual deve ser a nova quantidade? ", names[codeToUpdateQtt], quantities[codeToUpdateQtt]);
+        quantities[codeToUpdateQtt] = scanner.nextInt();
 
+        System.out.printf("A quantidade do produto %s foi atualizada para %s unidades.", names[codeToUpdateQtt], quantities[codeToUpdateQtt]);
     }
 
 
@@ -117,7 +121,7 @@ public class WarehouseManagement {
             System.out.printf("%nO produto %s já está ativo!", names[codeToActivate]);
         } else {
             isActive[codeToActivate] = true;
-            System.out.printf("%nO produto %s foi reativado com sucesso!%n%nDeseja atualizar sua quantidade em estoque? %n(1 - Sim / 2 - Não): ");
+            System.out.printf("%nO produto %s foi reativado com sucesso!%n%nDeseja atualizar sua quantidade em estoque? %n(1 - Sim / 2 - Não): ", names[codeToActivate]);
             int updateQtt = scanner.nextInt();
             if (updateQtt == 1) {
                 System.out.printf("%nInsira a nova quantidade para o produto %s: ", names[codeToActivate]);
@@ -150,8 +154,8 @@ public class WarehouseManagement {
     public static void viewLog() {
         System.out.printf("%n%n| MOVIMENTAÇÕES%n");
 
-        for (int change = 0; change < changesLog.size(); change++) {
-            System.out.println("| " + changesLog.get(change));
+        for (String s : changesLog) {
+            System.out.println("| " + s);
         }
     }
 
