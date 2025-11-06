@@ -1,5 +1,6 @@
 package com.amates.structuredwms;
 
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -32,10 +33,11 @@ public class WarehouseManagement {
         System.out.printf("1 - Cadastrar produto%n");
         System.out.printf("2 - Atualizar quantidade%n");
         System.out.printf("3 - Remover produto%n");
-        System.out.printf("4 - Consultar estoque%n");
-        System.out.printf("5 - Ver valor total do estoque%n");
-        System.out.printf("6 - Ver registro de movimentações%n");
-        System.out.printf("7 - Sair%n");
+        System.out.printf("4 - Reativar produto%n");
+        System.out.printf("5 - Consultar estoque%n");
+        System.out.printf("6 - Ver valor total do estoque%n");
+        System.out.printf("7 - Ver registro de movimentações%n");
+        System.out.printf("8 - Sair%n");
         System.out.println("Escolha uma opção: ");
 
         int userInput = scanner.nextInt();
@@ -47,18 +49,20 @@ public class WarehouseManagement {
                 updateQuantity(scanner);
                 break;
             case 3:
-                removeProduct(scanner);
+                deactivateProduct(scanner);
                 break;
             case 4:
+                activateProduct(scanner);
+            case 5:
                 getQuantity(scanner);
                 break;
-            case 5:
+            case 6:
                 getWarehouseValuation(scanner);
                 break;
-            case 6:
+            case 7:
                 viewLog();
                 break;
-            case 7:
+            case 8:
                 return false;
             default:
                 System.out.printf("%n%nOPÇÃO INVÁLIDA.%n%n");
@@ -82,30 +86,64 @@ public class WarehouseManagement {
         isActive[productsRegistered] = true;
         addToLog("Cadastrar produto", productsRegistered);
 
-        System.out.printf("%n-> O produto %s, com estoque %d e preço R$%.2f foi cadastrado com o código %d%n", names[productsRegistered], quantities[productsRegistered], prices[productsRegistered], codes[productsRegistered]);
+        System.out.printf("%n-> O produto %s, com estoque %d e preço R$%.2f foi cadastrado com o código %d", names[productsRegistered], quantities[productsRegistered], prices[productsRegistered], codes[productsRegistered]);
         productsRegistered++;
     }
 
     public static void updateQuantity(Scanner scanner) {
-
+        System.out.printf("%n%nATUALIZAR QUANTIDADE");
 
 
     }
 
 
-    public static void removeProduct(Scanner scanner) {
+    public static void deactivateProduct(Scanner scanner) {
+        System.out.printf("%n%nREMOVER PRODUTO %nDigite o código do produto que deseja mudar o status para inativo: ");
+        int codeToDeactivate = scanner.nextInt();
 
+        if (quantities[codeToDeactivate] > 0) {
+            System.out.printf("%nO produto %s tem quantidade em estoque. Zere antes de remover!", names[codeToDeactivate]);
+        } else {
+            isActive[codeToDeactivate] = false;
+            System.out.printf("%nO produto %s foi desativado.", names[codeToDeactivate]);
+        }
+    }
+
+    public static void activateProduct(Scanner scanner) {
+        System.out.printf("%n%nREATIVAR PRODUTO %nDigite o código do produto que deseja mudar o status para reativar: ");
+        int codeToActivate = scanner.nextInt();
+
+        if (isActive[codeToActivate]) {
+            System.out.printf("%nO produto %s já está ativo!", names[codeToActivate]);
+        } else {
+            isActive[codeToActivate] = true;
+            System.out.printf("%nO produto %s foi reativado com sucesso!%n%nDeseja atualizar sua quantidade em estoque? %n(1 - Sim / 2 - Não): ");
+            int updateQtt = scanner.nextInt();
+            if (updateQtt == 1) {
+                System.out.printf("%nInsira a nova quantidade para o produto %s: ", names[codeToActivate]);
+                quantities[codeToActivate] = scanner.nextInt();
+                System.out.printf("%n%nO produto %s foi definido com quantidade %d.%n", names[codeToActivate], quantities[codeToActivate]);
+            }
+        }
     }
 
     public static void getQuantity(Scanner scanner) {
-
+        System.out.printf("%n%nACESSAR QUANTIDADE EM ESTOQUE %nDigite o código do produto que deseja consultar a quantidade: ");
+        int codeToGetQtt = scanner.nextInt();
+        System.out.printf("%nO produto %s tem quantidade %d.", names[codeToGetQtt], quantities[codeToGetQtt]);
     }
 
     public static void getWarehouseValuation(Scanner scanner) {
 
+
+
+
+
+
+
     }
 
-    public static void addToLog(String action, double value){
+    public static void addToLog(String action, double value) {
         changesLog.add("Ação: " + action + "| Parâmetro: " + value);
     }
 
