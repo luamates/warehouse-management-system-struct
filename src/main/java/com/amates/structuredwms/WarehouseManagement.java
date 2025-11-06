@@ -34,7 +34,8 @@ public class WarehouseManagement {
         System.out.printf("3 - Remover produto%n");
         System.out.printf("4 - Consultar estoque%n");
         System.out.printf("5 - Ver valor total do estoque%n");
-        System.out.printf("6 - Sair%n");
+        System.out.printf("6 - Ver registro de movimentações%n");
+        System.out.printf("7 - Sair%n");
         System.out.println("Escolha uma opção: ");
 
         int userInput = scanner.nextInt();
@@ -55,6 +56,9 @@ public class WarehouseManagement {
                 getWarehouseValuation(scanner);
                 break;
             case 6:
+                viewLog();
+                break;
+            case 7:
                 return false;
             default:
                 System.out.printf("%n%nOPÇÃO INVÁLIDA.%n%n");
@@ -78,7 +82,7 @@ public class WarehouseManagement {
         isActive[productsRegistered] = true;
         addToLog("Cadastrar produto", productsRegistered);
 
-        System.out.printf("%n-> O produto %s, com estoque %d e preço %.2f foi cadastrado com o código %d%n", names[productsRegistered], quantities[productsRegistered], prices[productsRegistered], codes[productsRegistered]);
+        System.out.printf("%n-> O produto %s, com estoque %d e preço R$%.2f foi cadastrado com o código %d%n", names[productsRegistered], quantities[productsRegistered], prices[productsRegistered], codes[productsRegistered]);
         productsRegistered++;
     }
 
@@ -104,6 +108,15 @@ public class WarehouseManagement {
     public static void addToLog(String action, double value){
         changesLog.add("Ação: " + action + "| Parâmetro: " + value);
     }
+
+    public static void viewLog() {
+        System.out.printf("%n%n| MOVIMENTAÇÕES%n");
+
+        for (int change = 0; change < changesLog.size(); change++) {
+            System.out.println("| " + changesLog.get(change));
+        }
+    }
+
 
 
 
