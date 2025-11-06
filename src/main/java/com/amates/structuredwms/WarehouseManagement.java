@@ -1,6 +1,5 @@
 package com.amates.structuredwms;
 
-import java.awt.*;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -73,7 +72,7 @@ public class WarehouseManagement {
         System.out.printf("%n%nCADASTRO DE PRODUTO");
 
         System.out.printf("%nDigite o nome do produto: ");
-        names[productsRegistered] = scanner.next();
+        names[productsRegistered] = scanner.nextLine();
 
         System.out.printf("%nDigite a quantidade em estoque: ");
         quantities[productsRegistered] = scanner.nextInt();
@@ -90,7 +89,10 @@ public class WarehouseManagement {
     }
 
     public static void updateQuantity(Scanner scanner) {
-        System.out.printf("%n%nATUALIZAR QUANTIDADE %nDigite o código do produto que deseja atualizar a quantidade em estoque: ");
+        System.out.printf("%n%nATUALIZAR QUANTIDADE");
+        listActiveProducts();
+
+        System.out.printf("%nDigite o código do produto que deseja atualizar a quantidade em estoque: ");
         int codeToUpdateQtt = scanner.nextInt();
 
         if (codeToUpdateQtt < 0 || codeToUpdateQtt >= productsRegistered) {
@@ -112,7 +114,10 @@ public class WarehouseManagement {
     }
 
     public static void deactivateProduct(Scanner scanner) {
-        System.out.printf("%n%nREMOVER PRODUTO %nDigite o código do produto que deseja mudar o status para inativo: ");
+        System.out.printf("%n%nREMOVER PRODUTO");
+        listActiveProducts();
+
+        System.out.printf("%nDigite o código do produto que deseja mudar o status para inativo: ");
         int codeToDeactivate = scanner.nextInt();
 
         if (codeToDeactivate < 0 || codeToDeactivate >= productsRegistered) {
@@ -132,7 +137,10 @@ public class WarehouseManagement {
     }
 
     public static void activateProduct(Scanner scanner) {
-        System.out.printf("%n%nREATIVAR PRODUTO %nDigite o código do produto que deseja mudar o status para reativar: ");
+        System.out.printf("%n%nREATIVAR PRODUTO");
+        listInactiveProducts();
+
+        System.out.printf("%nDigite o código do produto que deseja mudar o status para reativar: ");
         int codeToActivate = scanner.nextInt();
 
         if (codeToActivate < 0 || codeToActivate >= productsRegistered) {
@@ -159,7 +167,10 @@ public class WarehouseManagement {
     }
 
     public static void getQuantity(Scanner scanner) {
-        System.out.printf("%n%nACESSAR QUANTIDADE EM ESTOQUE %nDigite o código do produto que deseja consultar a quantidade: ");
+        System.out.printf("%n%nACESSAR QUANTIDADE EM ESTOQUE");
+        listActiveProducts();
+
+        System.out.printf("%nDigite o código do produto que deseja consultar a quantidade: ");
         int codeToGetQtt = scanner.nextInt();
 
         if (codeToGetQtt < 0 || codeToGetQtt >= productsRegistered) {
@@ -189,7 +200,11 @@ public class WarehouseManagement {
     }
 
     public static void addToLog(String action, double value) {
-        changesLog.add("Ação: " + action + "| Parâmetro: " + value);
+        changesLog.add("Ação: " + action + " | Parâmetro: " + value);
+    }
+
+    public static void addToLog(String action, int value) { //sobrecarga int/double
+        changesLog.add("Ação: " + action + " | Parâmetro: " + value);
     }
 
     public static void viewLog() {
@@ -197,6 +212,24 @@ public class WarehouseManagement {
 
         for (String s : changesLog) {
             System.out.println("| " + s);
+        }
+    }
+
+    public static void listActiveProducts() {
+        System.out.printf("%n%n-> PRODUTOS ATIVOS%n");
+        for (int i = 0; i < productsRegistered; i++) {
+            if (isActive[i]) {
+                System.out.printf("[%d] %s - %d unidades - R$%.2f%n", codes[i], names[i], quantities[i], prices[i]);
+            }
+        }
+    }
+
+    public static void listInactiveProducts() {
+        System.out.printf("%n%n-> PRODUTOS INATIVOS%n");
+        for (int i = 0; i < productsRegistered; i++) {
+            if (!isActive[i]) {
+                System.out.printf("[%d] %s - %d unidades - R$%.2f%n", codes[i], names[i], quantities[i], prices[i]);
+            }
         }
     }
 }
